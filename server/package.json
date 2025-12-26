@@ -1,0 +1,30 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "server": "nodemon server.js",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@clerk/clerk-sdk-node": "^4.13.23",
+    "@clerk/express": "^1.7.50",
+    "cloudinary": "^2.8.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "mongoose": "^8.20.0",
+    "multer": "^2.0.2",
+    "nodemailer": "^7.0.10",
+    "stripe": "^20.0.0",
+    "svix": "^1.81.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.11"
+  }
+}
