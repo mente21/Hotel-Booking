@@ -115,6 +115,16 @@ export const facilityIcons = {
     "Spa Tub": assets.poolIcon,
     "TV": assets.roomServiceIcon,
     "Desk": assets.badgeIcon,
+    "Gym": assets.badgeIcon,
+    "Parking": assets.locationFilledIcon,
+    "Air Conditioning": assets.homeIcon,
+    "Pet Friendly": assets.heartIcon,
+    "Bar": assets.roomServiceIcon,
+    "Restaurant": assets.roomServiceIcon,
+    "Concierge": assets.userIcon,
+    "Spa": assets.poolIcon,
+    "Valet Parking": assets.locationFilledIcon,
+    "Laundry": assets.roomServiceIcon,
 };
 
 // For Room Details Page

@@ -3,7 +3,7 @@ import Booking from "../models/Booking.js";
 import Room from "../models/Room.js";
 import Hotel from "../models/Hotel.js";
 import transporter from "../configs/nodemailer.js";
-import stripe from 'stripe'
+import Stripe from 'stripe'
 
 
 
@@ -165,9 +165,17 @@ export const stripePayment = async (req, res) => {
         const booking = await Booking.findById(bookingId);
         const roomData = await Room.findById(booking.room).populate('hotel');
         const totalPrice = booking.totalPrice;
-        const { origin } = req.headers;
+        let origin = req.headers.origin;
+        if (!origin && req.headers.referer) {
+            try {
+                origin = new URL(req.headers.referer).origin;
+            } catch (e) {
+                console.error("Failed to parse referer:", e);
+            }
+        }
+        if (!origin) origin = 'http://localhost:5173';
 
-        const stripeInstance = new stripe(process.env.STRIPE_SECRET_KEY);
+        const stripeInstance = new Stripe(process.env.STRIPE_SECRET_KEY);
 
         const line_items = [
             {
@@ -209,7 +217,7 @@ export const verifyPayment = async (req, res) => {
         const userId = req.user._id;
 
         if (success === "true" && session_id) {
-            const stripeInstance = new stripe(process.env.STRIPE_SECRET_KEY);
+            const stripeInstance = new Stripe(process.env.STRIPE_SECRET_KEY);
             const session = await stripeInstance.checkout.sessions.retrieve(session_id);
 
             if (session.payment_status === "paid") {

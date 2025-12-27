@@ -1,8 +1,12 @@
-<svg width="215" height="40" viewBox="0 0 215 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <!-- Elegant Shelter Icon -->
-  <path d="M22 6L4 18V34H14V24H30V34H40V18L22 6Z" fill="white"/>
-  
-  <!-- Modern Typography -->
-  <text x="50" y="31" fill="white" font-family="Inter, system-ui, sans-serif" font-weight="800" font-size="28px" letter-spacing="-1px">Mente</text>
-  <text x="133" y="31" fill="white" font-family="Inter, system-ui, sans-serif" font-weight="300" font-size="28px" letter-spacing="-1px">Stay</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 50" fill="none">
+  <!-- Bed Icon -->
+  <path d="M10 25V12C10 10.8954 10.8954 10 12 10H20C21.1046 10 22 10.8954 22 12V25H10Z" fill="#4F46E5"/>
+  <path d="M26 18C26 15.7909 27.7909 14 30 14H50V25H26V18Z" fill="#4F46E5"/>
+  <path d="M4 30H56V38C56 39.1046 55.1046 40 54 40H6C4.89543 40 4 39.1046 4 38V30Z" fill="#4F46E5"/>
+  <path d="M4 40V44" stroke="#4F46E5" stroke-width="4" stroke-linecap="round"/>
+  <path d="M56 40V44" stroke="#4F46E5" stroke-width="4" stroke-linecap="round"/>
+
+  <!-- Brand Name -->
+  <text x="70" y="34" font-family="sans-serif" font-weight="800" font-size="28" fill="#0F172A" letter-spacing="-0.5">Mente</text>
+  <text x="165" y="34" font-family="sans-serif" font-weight="500" font-size="28" fill="#4F46E5" letter-spacing="-0.5">Stay</text>
 </svg>

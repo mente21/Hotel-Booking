@@ -12,7 +12,6 @@ import Dashboard from './pages/hotelOwner/Dashboard'
 import AddRoom from './pages/hotelOwner/AddRoom'
 import ListRoom from './pages/hotelOwner/ListRoom'
 import EditRoom from './pages/hotelOwner/EditRoom'
-import Curated from './pages/Curated'
 import Contact from './pages/Contact'
 import { Toaster } from 'react-hot-toast'
 import { useAppContext } from './context/AppContext'
@@ -34,7 +33,6 @@ const App = () => {
           <Route path='/' element={<Home />} />
           <Route path='/rooms' element={<AllRooms />} />
           <Route path='/rooms/:id' element={<RoomDetail />} />
-          <Route path='/curated' element={<Curated />} />
           <Route path='/contact' element={<Contact />} />
           <Route path='/my-bookings' element={<MyBookings />} />
           <Route path='/loader/:nextUrl' element={<Loader />} />

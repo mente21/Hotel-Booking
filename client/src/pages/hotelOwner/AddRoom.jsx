@@ -23,6 +23,24 @@ const AddRoom = () => {
             'Room Service': false,
             'Mountain View': false,
             'Pool Access': false,
+            'City View': false,
+            'Ocean View': false,
+            'Mini Bar': false,
+            'Kitchenette': false,
+            'Fireplace': false,
+            'Private Balcony': false,
+            'Spa Tub': false,
+            'TV': false,
+            'Desk': false,
+            'Gym': false,
+            'Parking': false,
+            'Air Conditioning': false,
+            'Pet Friendly': false,
+            'Bar': false,
+            'Restaurant': false,
+            'Concierge': false,
+            'Valet Parking': false,
+            'Laundry': false
         }
     })
 
@@ -59,11 +77,29 @@ const AddRoom = () => {
                     roomType: '',
                     pricePerNight: 0,
                     amenities: {
-                        'Free Wifi': false,
-                        'Free Breakfast': false,
-                        'Room Service': false,
-                        'Mountain View': false,
-                        'Pool Access': false
+            'Free Wifi': false,
+            'Free Breakfast': false,
+            'Room Service': false,
+            'Mountain View': false,
+            'Pool Access': false,
+            'City View': false,
+            'Ocean View': false,
+            'Mini Bar': false,
+            'Kitchenette': false,
+            'Fireplace': false,
+            'Private Balcony': false,
+            'Spa Tub': false,
+            'TV': false,
+            'Desk': false,
+            'Gym': false,
+            'Parking': false,
+            'Air Conditioning': false,
+            'Pet Friendly': false,
+            'Bar': false,
+            'Restaurant': false,
+            'Concierge': false,
+            'Valet Parking': false,
+            'Laundry': false
                     }
                 })
                 setImages({ 1: null, 2: null, 3: null, 4: null })

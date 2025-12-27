@@ -1,5 +1,6 @@
 import React from 'react'
 import { assets } from '../assets/assets'
+import { Link } from 'react-router-dom'
 
 const Footer = () => {
     return (
@@ -8,20 +9,15 @@ const Footer = () => {
 
                 {/* Brand Presence */}
                 <div className="md:col-span-4 max-w-sm">
-                    <div className='flex items-center gap-2 mb-8'>
-                        <div className='p-1.5 rounded-lg bg-primary'>
-                            <img src={assets.logo} alt="logo" className="h-6 w-auto" />
-                        </div>
-                        <span className='font-playfair text-2xl font-bold tracking-tight text-primary'>
-                            Mente<span className='font-light italic text-accent'>Stay</span>
-                        </span>
+                    <div className='mb-8'>
+                        <img src={assets.logo} alt="MenteStay" className="h-12 w-auto" />
                     </div>
                     <p className="text-gray-400 font-light leading-relaxed mb-8">
                         Curating exceptional travel experiences through a handpicked portfolio of the world's most distinguished hotels and boutique resorts.
                     </p>
                     <div className="flex items-center gap-4">
                         {[assets.instagramIcon, assets.facebookIcon, assets.twitterIcon, assets.linkendinIcon].map((icon, i) => (
-                            <a key={i} href="#" className='p-3 rounded-full border border-gray-100 hover:border-accent hover:bg-accent-soft hover:-translate-y-1 transition-all group'>
+                            <a key={i} href="#" onClick={(e) => e.preventDefault()} className='p-3 rounded-full border border-gray-100 hover:border-accent hover:bg-accent-soft hover:-translate-y-1 transition-all group'>
                                 <img src={icon} alt="" className='w-4 opacity-40 group-hover:opacity-100' />
                             </a>
                         ))}
@@ -33,20 +29,20 @@ const Footer = () => {
                     <div>
                         <h4 className="font-playfair text-xl font-bold text-primary mb-8 tracking-tight">Portfolio</h4>
                         <ul className="space-y-4 text-sm font-light text-gray-500">
-                            <li><a href="#" className='hover:text-accent transition-colors'>Luxury Resorts</a></li>
-                            <li><a href="#" className='hover:text-accent transition-colors'>Boutique Hotels</a></li>
-                            <li><a href="#" className='hover:text-accent transition-colors'>Private Villas</a></li>
-                            <li><a href="#" className='hover:text-accent transition-colors'>City Suites</a></li>
+                            <li><Link to="/rooms" className='hover:text-accent transition-colors'>Luxury Resorts</Link></li>
+                            <li><Link to="/rooms" className='hover:text-accent transition-colors'>Boutique Hotels</Link></li>
+                            <li><Link to="/rooms" className='hover:text-accent transition-colors'>Private Villas</Link></li>
+                            <li><Link to="/rooms" className='hover:text-accent transition-colors'>City Suites</Link></li>
                         </ul>
                     </div>
 
                     <div>
                         <h4 className="font-playfair text-xl font-bold text-primary mb-8 tracking-tight">Concierge</h4>
                         <ul className="space-y-4 text-sm font-light text-gray-500">
-                            <li><a href="#" className='hover:text-accent transition-colors'>About MenteStay</a></li>
-                            <li><a href="#" className='hover:text-accent transition-colors'>Curated Guide</a></li>
-                            <li><a href="#" className='hover:text-accent transition-colors'>Partner Program</a></li>
-                            <li><a href="#" className='hover:text-accent transition-colors'>Member Services</a></li>
+                            <li><Link to="/contact" className='hover:text-accent transition-colors'>About MenteStay</Link></li>
+                            <li><Link to="/rooms" className='hover:text-accent transition-colors'>Curated Guide</Link></li>
+                            <li><Link to="/owner" className='hover:text-accent transition-colors'>Partner Program</Link></li>
+                            <li><Link to="/contact" className='hover:text-accent transition-colors'>Member Services</Link></li>
                         </ul>
                     </div>
 
@@ -69,9 +65,9 @@ const Footer = () => {
                     &copy; {new Date().getFullYear()} Mentesnot Debele. All rights reserved.
                 </p>
                 <div className="flex gap-8 text-[10px] uppercase font-bold tracking-[0.2em] text-gray-400">
-                    <a href="#" className='hover:text-primary transition-colors'>Privacy</a>
-                    <a href="#" className='hover:text-primary transition-colors'>Terms</a>
-                    <a href="#" className='hover:text-primary transition-colors'>Cookies</a>
+                    <Link to="/" className='hover:text-primary transition-colors'>Privacy</Link>
+                    <Link to="/" className='hover:text-primary transition-colors'>Terms</Link>
+                    <Link to="/" className='hover:text-primary transition-colors'>Cookies</Link>
                 </div>
             </div>
         </footer>

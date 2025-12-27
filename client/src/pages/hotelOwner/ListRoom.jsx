@@ -9,6 +9,8 @@ const ListRoom = () => {
     const [rooms, setRooms] = useState([]);
     const { axios, getToken, user, currency } = useAppContext();
 
+    const [seeding, setSeeding] = useState(false);
+
     // Fetch Rooms of the Hotel Owner
     const fetchRooms = async () => {
         try {
@@ -22,6 +24,54 @@ const ListRoom = () => {
             }
         } catch (error) {
             toast.error(error.message)
+        }
+    }
+
+    const seedDB = async () => {
+        if (!window.confirm("This will add dummy rooms to your inventory up to 6 items. Continue?")) return;
+        setSeeding(true);
+        try {
+            const currentCount = rooms.length;
+            const needed = 6 - currentCount;
+            
+            if (needed <= 0) {
+                toast("Inventory already has 6 or more items!");
+                setSeeding(false);
+                return;
+            }
+
+            const dummyImages = [
+                "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?q=80&w=1000&auto=format&fit=crop",
+                "https://images.unsplash.com/photo-1611892440504-42a792e24d32?q=80&w=1000&auto=format&fit=crop",
+                "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=1000&auto=format&fit=crop",
+                "https://images.unsplash.com/photo-1590490360182-c33d57733427?q=80&w=1000&auto=format&fit=crop"
+            ];
+            
+            const types = ["Single Bed", "Double Bed", "Luxury Room", "Family Suite"];
+            
+            for (let i = 0; i < needed; i++) {
+                const formData = new FormData();
+                formData.append('roomType', types[i % types.length]);
+                formData.append('pricePerNight', 150 + (i * 50));
+                
+                const amenitiesList = ["Free Wifi", "Air Conditioning", "TV", "Gym", "Breakfast"];
+                if (i % 2 === 0) amenitiesList.push("Pool Access", "Spa");
+                
+                formData.append('amenities', JSON.stringify(amenitiesList));
+                formData.append('imageUrls', JSON.stringify([dummyImages[i % dummyImages.length]]));
+
+                await axios.post('/api/rooms/', formData, {
+                    headers: { Authorization: `Bearer ${await getToken()}` }
+                });
+            }
+            
+            toast.success(`Successfully added ${needed} rooms!`);
+            fetchRooms();
+
+        } catch (error) {
+            toast.error("Seeding failed: " + error.message);
+        } finally {
+            setSeeding(false);
         }
     }
     // Toggle Availability of the Room
@@ -72,9 +122,14 @@ const ListRoom = () => {
 
             <div className='mb-8 flex items-center justify-between'>
                 <p className='text-[10px] font-black uppercase tracking-widest text-slate-400'>Global Inventory: {rooms.length}</p>
-                <button onClick={() => navigate('/owner/add-room')} className='px-6 py-2 bg-iris text-white rounded-xl text-[10px] font-black uppercase tracking-widest hover:shadow-xl hover:shadow-iris/20 transition-all'>
-                    Add New Property
-                </button>
+                <div className='flex gap-4'>
+                    <button onClick={seedDB} disabled={seeding} className='px-6 py-2 bg-white border border-slate-200 text-slate-500 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-slate-50 transition-all'>
+                        {seeding ? "Syncing..." : "Auto-Fill Inventory"}
+                    </button>
+                    <button onClick={() => navigate('/owner/add-room')} className='px-6 py-2 bg-iris text-white rounded-xl text-[10px] font-black uppercase tracking-widest hover:shadow-xl hover:shadow-iris/20 transition-all'>
+                        Add New Property
+                    </button>
+                </div>
             </div>
 
             <div className='w-full overflow-hidden rounded-[2.5rem] border border-slate-100 bg-white shadow-2xl shadow-midnight/5'>

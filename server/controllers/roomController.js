@@ -11,13 +11,17 @@ export const createRoom = async (req, res) => {
         if (!hotel) return res.json({ success: false, message: "No Hotel found" });
 
         // upload images to cloudinary
-        const uploadImages = req.files.map(async (file) => {
-            const response = await cloudinary.uploader.upload(file.path);
-            return response.secure_url;
-        })
-
-        // Wait for all uploads to complete
-        const images = await Promise.all(uploadImages)
+        let images = [];
+        if (req.files && req.files.length > 0) {
+            const uploadImages = req.files.map(async (file) => {
+                const response = await cloudinary.uploader.upload(file.path);
+                return response.secure_url;
+            })
+            images = await Promise.all(uploadImages)
+        } else if (req.body.imageUrls) {
+            // Allow seeding with direct URLs
+            images = JSON.parse(req.body.imageUrls);
+        }
 
         await Room.create({
             hotel: hotel._id,

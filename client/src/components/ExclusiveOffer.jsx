@@ -1,6 +1,7 @@
 import React from 'react'
 import Title from './Title'
 import { assets, exclusiveOffers } from '../assets/assets'
+import { Link } from 'react-router-dom'
 
 const ExclusiveOffer = () => {
     return (
@@ -12,10 +13,10 @@ const ExclusiveOffer = () => {
                         Exclusive <span className='italic font-light'>Privileges</span>
                     </h1>
                 </div>
-                <button className='group flex items-center gap-4 px-8 py-3 rounded-full border border-white/30 hover:bg-white hover:text-primary transition-all'>
+                <Link to="/rooms" className='group flex items-center gap-4 px-8 py-3 rounded-full border border-white/30 hover:bg-white hover:text-primary transition-all'>
                     View All Invitations
                     <img src={assets.arrowIcon} alt='arrow-icon' className='group-hover:translate-x-1 transition-all invert group-hover:invert-0' />
-                </button>
+                </Link>
             </div>
 
             <div className='grid grid-cols-1 md:grid-cols-3 gap-8'>
@@ -40,10 +41,10 @@ const ExclusiveOffer = () => {
                             </p>
                             <div className='flex items-center justify-between'>
                                 <span className='text-[10px] uppercase font-bold tracking-widest text-white/40'>Valid until {item.expiryDate}</span>
-                                <button className='flex items-center gap-2 text-xs font-bold uppercase tracking-widest hover:text-accent transition-all'>
+                                <Link to="/rooms" className='flex items-center gap-2 text-xs font-bold uppercase tracking-widest hover:text-accent transition-all'>
                                     Details
                                     <img className='invert grayscale brightness-200 h-3 group-hover:translate-x-1 transition-all' src={assets.arrowIcon} alt="" />
-                                </button>
+                                </Link>
                             </div>
                         </div>
                     </div>

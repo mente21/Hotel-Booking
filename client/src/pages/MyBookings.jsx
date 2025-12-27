@@ -102,22 +102,22 @@ const MyBookings = () => {
                         {/* HOTEL DETAILS */}
                         <div className='flex flex-col md:flex-row'>
                             <img
-                                src={booking.room.images[0]}
+                                src={booking.room?.images?.[0] || assets.roomImg1}
                                 alt="hotel-img"
                                 className='md:w-44 rounded shadow object-cover'
                             />
 
                             <div className='flex flex-col gap-1.5 mt-3 md:ml-4'>
                                 <p className='font-playfair text-2xl'>
-                                    {booking.hotel.name}
+                                    {booking.hotel?.name || "Unknown Hotel"}
                                     <span className='font-inter text-sm'>
-                                        ({booking.room.roomType})
+                                        ({booking.room?.roomType || "N/A"})
                                     </span>
                                 </p>
 
                                 <div className='flex items-center gap-1 text-sm text-gray-500'>
                                     <img src={assets.locationIcon} alt="location-icon" />
-                                    <span>{booking.hotel.address}</span>
+                                    <span>{booking.hotel?.address || "Address unavailable"}</span>
                                 </div>
 
                                 <div className='flex items-center gap-1 text-sm text-gray-500'>

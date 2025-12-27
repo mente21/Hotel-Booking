@@ -28,6 +28,24 @@ const EditRoom = () => {
             'Room Service': false,
             'Mountain View': false,
             'Pool Access': false,
+            'City View': false,
+            'Ocean View': false,
+            'Mini Bar': false,
+            'Kitchenette': false,
+            'Fireplace': false,
+            'Private Balcony': false,
+            'Spa Tub': false,
+            'TV': false,
+            'Desk': false,
+            'Gym': false,
+            'Parking': false,
+            'Air Conditioning': false,
+            'Pet Friendly': false,
+            'Bar': false,
+            'Restaurant': false,
+            'Concierge': false,
+            'Valet Parking': false,
+            'Laundry': false
         }
     })
 
@@ -36,13 +54,17 @@ const EditRoom = () => {
     useEffect(() => {
         const room = rooms.find(r => r._id === id)
         if (room) {
-            const mappedAmenities = {
-                'Free Wifi': room.amenities.includes('Free Wifi'),
-                'Free Breakfast': room.amenities.includes('Free Breakfast'),
-                'Room Service': room.amenities.includes('Room Service'),
-                'Mountain View': room.amenities.includes('Mountain View'),
-                'Pool Access': room.amenities.includes('Pool Access'),
-            }
+            const allAmenities = [
+                'Free Wifi', 'Free Breakfast', 'Room Service', 'Mountain View', 'Pool Access',
+                'City View', 'Ocean View', 'Mini Bar', 'Kitchenette', 'Fireplace', 
+                'Private Balcony', 'Spa Tub', 'TV', 'Desk', 'Gym', 'Parking', 
+                'Air Conditioning', 'Pet Friendly', 'Bar', 'Restaurant', 
+                'Concierge', 'Valet Parking', 'Laundry'
+            ];
+            const mappedAmenities = {};
+            allAmenities.forEach(amenity => {
+                mappedAmenities[amenity] = room.amenities.includes(amenity);
+            });
             setInputs({
                 roomType: room.roomType,
                 pricePerNight: room.pricePerNight,

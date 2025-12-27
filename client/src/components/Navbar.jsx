@@ -12,18 +12,21 @@ const BookIcon = () => (
 )
 // Navbar Component
 const Navbar = () => {
-    const navLinks = [
-        { name: 'Home', path: '/' },
-        { name: 'Portfolio', path: '/rooms' },
-        { name: 'Curated', path: '/curated' },
-        { name: 'Contact', path: '/contact' },
-    ];
-
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const { openSignIn } = useClerk();
     const location = useLocation();
     const { user, navigate, isOwner, setShowHotelReg } = useAppContext()
+
+    const navLinks = [
+        { name: 'Home', path: '/' },
+        { name: 'Portfolio', path: '/rooms' },
+        { name: 'Contact', path: '/contact' },
+    ];
+
+    if (user) {
+        navLinks.push({ name: 'My Bookings', path: '/my-bookings' });
+    }
 
     useEffect(() => {
         if (location.pathname !== '/') {
@@ -45,7 +48,7 @@ const Navbar = () => {
             
             {/* Elegant Logo */}
             <Link to='/' className='flex items-center'>
-                <img src={assets.logo} alt="MenteStay" className={`h-8 w-auto transition-all ${isScrolled ? 'brightness-0' : 'invert'}`} />
+                <img src={assets.logo} alt="MenteStay" className={`h-12 w-auto transition-all ${isScrolled ? '' : 'brightness-0 invert'}`} />
             </Link>
 
             {/* Modern Navigation */}
