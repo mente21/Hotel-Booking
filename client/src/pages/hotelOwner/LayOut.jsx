@@ -21,7 +21,7 @@ const LayOut = () => {
 
                 <SideBar />
 
-                <div className="flex-1 p-4 pt-10 md:px-10 overflow-y-auto">
+                <div className="flex-1 p-12 md:px-20 overflow-y-auto bg-bone">
                     <Outlet />
                 </div>
             </div>

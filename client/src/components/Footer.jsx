@@ -3,91 +3,77 @@ import { assets } from '../assets/assets'
 
 const Footer = () => {
     return (
-        <footer className="bg-[#F6F9FC] px-6 md:px-16 lg:px-24 xl:px-32 pt-8 w-full text-gray-500">
-            <div className="flex flex-col md:flex-row justify-between w-full gap-10 border-b border-gray-500/30 pb-6">
+        <footer className="bg-white border-t border-gray-100 pt-24 pb-12 transition-all">
+            <div className="section-padding !py-0 grid grid-cols-1 md:grid-cols-12 gap-16 border-b border-gray-100 pb-20">
 
-                {/* Left Logo + Text */}
-                <div className="md:max-w-96 ">
-                    <img alt="logo" className="mb-4 h-8 md:h-9 invert opacity-80" src={assets.logo} />
-                    <p className="mt-6 text-sm">
-                        Book your perfect stay with us. We offer seamless hotel reservations, trusted listings, and the best prices to make your travel experience smooth, comfortable, and memorable.
-                    </p>
-                    <div className="flex items-center gap-3 mt-4">
-                        <img src={assets.instagramIcon} alt="instagram-icon" className='w-6' />
-                        <img src={assets.facebookIcon} alt="facebook-icon" className='w-6' />
-                        <img src={assets.twitterIcon} alt="twitter-icon" className='w-6' />
-                        <img src={assets.linkendinIcon} alt="linkendin-icon" className='w-6' />
-
-                    </div>
-                </div>
-
-                {/* Columns */}
-                <div className="flex-1 flex items-start md:justify-end gap-20">
-
-                    {/* Company */}
-                    <div>
-                        <h2 className="font-playfair text-xl text-gray-800">COMPANY</h2>
-                        <ul className="text-sm space-y-2">
-                            <li><a href="#">About</a></li>
-                            <li><a href="#">Careers</a></li>
-                            <li><a href="#">Press</a></li>
-                            <li><a href="#">Blog</a></li>
-                            <li><a href="#">Partners</a></li>
-
-                        </ul>
-                    </div>
-
-                    {/* New Column - Resources */}
-                    <div>
-                        <h2 className="font-playfair text-xl text-gray-800">RESOURCES</h2>
-                        <ul className="mt-3 flex flex-col gap-2 text-sm">
-                            <li><a href="#">Help</a></li>
-                            <li><a href="#">Safety</a></li>
-                            <li><a href="#">Cancel</a></li>
-                            <li><a href="#">Support</a></li>
-                            <li><a href="#">Access</a></li>
-                        </ul>
-                    </div>
-
-
-                    {/* Newsletter */}
-                    <div>
-                        <h2 className="font-playfair text-xl text-gray-800">STAY UPDATED</h2>
-                        <div className="text-sm space-y-2">
-                            <p>The latest news, articles, and resources, sent to your inbox weekly.</p>
-
-                            <div className="flex items-center gap-2 pt-4">
-                                <input
-                                    className="border border-gray-500/30 placeholder-gray-500 focus:ring-2 ring-indigo-600 outline-none w-full max-w-64 h-9 rounded px-2"
-                                    type="email"
-                                    placeholder="Enter your email"
-                                />
-
-                                <button className="bg-black hover:bg-gray-900 transition-all duration-300 w-20 h-8 rounded-lg flex items-center justify-center shadow-md shadow-black/20">
-                                    <img src={assets.arrowIcon} alt="arrow-icon" className="w-3.5 invert" />
-                                </button>
-
-
-                            </div>
+                {/* Brand Presence */}
+                <div className="md:col-span-4 max-w-sm">
+                    <div className='flex items-center gap-2 mb-8'>
+                        <div className='p-1.5 rounded-lg bg-primary'>
+                            <img src={assets.logo} alt="logo" className="h-6 w-auto" />
                         </div>
+                        <span className='font-playfair text-2xl font-bold tracking-tight text-primary'>
+                            Mente<span className='font-light italic text-accent'>Stay</span>
+                        </span>
                     </div>
-                    <hr className='border-gray-300 mt-8' />
+                    <p className="text-gray-400 font-light leading-relaxed mb-8">
+                        Curating exceptional travel experiences through a handpicked portfolio of the world's most distinguished hotels and boutique resorts.
+                    </p>
+                    <div className="flex items-center gap-4">
+                        {[assets.instagramIcon, assets.facebookIcon, assets.twitterIcon, assets.linkendinIcon].map((icon, i) => (
+                            <a key={i} href="#" className='p-3 rounded-full border border-gray-100 hover:border-accent hover:bg-accent-soft hover:-translate-y-1 transition-all group'>
+                                <img src={icon} alt="" className='w-4 opacity-40 group-hover:opacity-100' />
+                            </a>
+                        ))}
+                    </div>
+                </div>
+
+                {/* Refined Navigation Grid */}
+                <div className="md:col-span-8 grid grid-cols-2 md:grid-cols-3 gap-12">
+                    <div>
+                        <h4 className="font-playfair text-xl font-bold text-primary mb-8 tracking-tight">Portfolio</h4>
+                        <ul className="space-y-4 text-sm font-light text-gray-500">
+                            <li><a href="#" className='hover:text-accent transition-colors'>Luxury Resorts</a></li>
+                            <li><a href="#" className='hover:text-accent transition-colors'>Boutique Hotels</a></li>
+                            <li><a href="#" className='hover:text-accent transition-colors'>Private Villas</a></li>
+                            <li><a href="#" className='hover:text-accent transition-colors'>City Suites</a></li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h4 className="font-playfair text-xl font-bold text-primary mb-8 tracking-tight">Concierge</h4>
+                        <ul className="space-y-4 text-sm font-light text-gray-500">
+                            <li><a href="#" className='hover:text-accent transition-colors'>About MenteStay</a></li>
+                            <li><a href="#" className='hover:text-accent transition-colors'>Curated Guide</a></li>
+                            <li><a href="#" className='hover:text-accent transition-colors'>Partner Program</a></li>
+                            <li><a href="#" className='hover:text-accent transition-colors'>Member Services</a></li>
+                        </ul>
+                    </div>
+
+                    <div className='col-span-2 md:col-span-1'>
+                        <h4 className="font-playfair text-xl font-bold text-primary mb-8 tracking-tight">Headquarters</h4>
+                        <p className='text-sm font-light text-gray-500 leading-relaxed mb-4'>
+                            123 Luxury Avenue, <br />
+                            Elite District, NY 10001
+                        </p>
+                        <p className='text-sm font-bold text-accent'>
+                            concierge@mentestay.com
+                        </p>
+                    </div>
                 </div>
             </div>
 
-            {/* Bottom */}
-            <div className='flex flex-col md:flex-row gap-2 items-center justify-between py-5'>
-                <p className="pt-4 text-center text-xs md:text-sm pb-5">
-                    Copyright ©{new Date().getFullYear()} - Mentesnot Debele .All rights reserved.
+            {/* Legal & Final Details */}
+            <div className='section-padding !py-0 pt-12 flex flex-col md:flex-row gap-6 items-center justify-between'>
+                <p className="text-gray-400 text-[10px] uppercase font-bold tracking-[0.2em]">
+                    &copy; {new Date().getFullYear()} Mentesnot Debele. All rights reserved.
                 </p>
-                <ul className="flex items-center gap-4">
-                    <li><a href="#">Privacy</a></li>
-                    <li><a href="#">Terms</a></li>
-                    <li><a href="#">Sitemap</a></li>
-                </ul>
+                <div className="flex gap-8 text-[10px] uppercase font-bold tracking-[0.2em] text-gray-400">
+                    <a href="#" className='hover:text-primary transition-colors'>Privacy</a>
+                    <a href="#" className='hover:text-primary transition-colors'>Terms</a>
+                    <a href="#" className='hover:text-primary transition-colors'>Cookies</a>
+                </div>
             </div>
-
-
         </footer>
     )
 }

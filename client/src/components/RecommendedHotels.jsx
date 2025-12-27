@@ -20,19 +20,19 @@ const RecommendedHotels = () => {
     }, [rooms, searchedCities])
 
     return recommended.length > 0 && (
-        <div className='flex flex-col items-center px-6 md:px-16 lg:px-24 bg-slate-50 py-20'>
+        <div className='section-padding bg-white'>
+            <div className='mb-24'>
+                <h2 className='text-accent font-bold uppercase tracking-[0.3em] text-[10px] mb-6'>Recommended for you</h2>
+                <h1 className='text-5xl md:text-7xl font-black text-primary tracking-tighter leading-none'>
+                    Your Next <br /> Perfect Stay.
+                </h1>
+            </div>
 
-            <Title
-                title='Recommended Hotels'
-                subTitle='Discover our handipicked selection of exceptional properties around the world,offering unparalleled luxury and unforgettable experiences.'
-            />
-
-            <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10 w-full'>
+            <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12'>
                 {recommended.slice(0, 4).map((room, index) => (
                     <HotelCard key={room._id} room={room} index={index} />
                 ))}
             </div>
-
         </div>
     )
 }

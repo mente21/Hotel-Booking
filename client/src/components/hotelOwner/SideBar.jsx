@@ -5,28 +5,41 @@ import { NavLink } from 'react-router-dom'
 const SideBar = () => {
 
     const sidebarLinks = [
-        { name: "Dashboard", path: "/owner", icon: assets.dashboardIcon },
-        { name: "Add Room", path: "/owner/add-room", icon: assets.addIcon },
-        { name: "List Room", path: "/owner/list-room", icon: assets.listIcon },
+        { name: "Overview", path: "/owner", icon: assets.dashboardIcon },
+        { name: "Add Property", path: "/owner/add-room", icon: assets.addIcon },
+        { name: "Listings", path: "/owner/list-room", icon: assets.listIcon },
     ]
 
     return (
-        <div className='md:w-64 w-16 border-r h-full text-base border-gray-300 pt-4 flex flex-col transition-all duration-300'>
-            {sidebarLinks.map((item, index) => (
-                <NavLink
-                    to={item.path}
-                    key={index}
-                    end
-                    className={({ isActive }) =>
-                        `flex items-center py-3 px-4 md:px-8 gap-3 ${isActive
-                            ? "border-r-4 md:border-r-[6px] bg-blue-600/10 border-blue-600 text-blue-600"
-                            : "hover:bg-gray-100/90 border-white text-gray-700"}`
-                    }
-                >
-                    <img src={item.icon} alt={item.name} className='min-h-6 min-w-6' />
-                    <p className='md:block hidden text-center'>{item.name}</p>
-                </NavLink>
-            ))}
+        <div className='md:w-72 w-20 bg-white border-r border-slate-100 h-full pt-10 flex flex-col'>
+            <div className='flex flex-col gap-2 px-4'>
+                {sidebarLinks.map((item, index) => (
+                    <NavLink
+                        to={item.path}
+                        key={index}
+                        end
+                        className={({ isActive }) =>
+                            `flex items-center py-4 px-6 gap-4 rounded-2xl transition-all duration-300 group ${isActive
+                                ? "bg-iris text-white shadow-xl shadow-iris/20"
+                                : "text-slate-500 hover:bg-slate-50 hover:text-midnight"}`
+                        }
+                    >
+                        {({ isActive }) => (
+                            <>
+                                <img src={item.icon} alt={item.name} className={`h-5 w-5 transition-all ${isActive ? 'brightness-0 invert' : ''}`} />
+                                <p className='md:block hidden text-xs font-black uppercase tracking-widest'>{item.name}</p>
+                            </>
+                        )}
+                    </NavLink>
+                ))}
+            </div>
+            
+            <div className='mt-auto p-8'>
+                <div className='p-6 rounded-3xl bg-iris/5 border border-iris/10'>
+                    <p className='text-[10px] font-black text-iris uppercase tracking-widest mb-2'>Partner Support</p>
+                    <p className='text-slate-500 text-[10px] leading-relaxed'>Dedicated assistance for our property managers.</p>
+                </div>
+            </div>
         </div>
     )
 }

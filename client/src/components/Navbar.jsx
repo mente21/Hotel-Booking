@@ -12,133 +12,111 @@ const BookIcon = () => (
 )
 // Navbar Component
 const Navbar = () => {
-
-    // Navigation links for both desktop & mobile
     const navLinks = [
         { name: 'Home', path: '/' },
-        { name: 'Hotels', path: '/rooms' },
-        { name: 'Experience', path: '/' },
-        { name: 'About', path: '/' },
+        { name: 'Portfolio', path: '/rooms' },
+        { name: 'Curated', path: '/curated' },
+        { name: 'Contact', path: '/contact' },
     ];
 
-    // State for scroll-based styling
     const [isScrolled, setIsScrolled] = useState(false);
-
-    // State for mobile menu (open/close)
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-    // Clerk authentication functions
     const { openSignIn } = useClerk();
     const location = useLocation();
-
     const { user, navigate, isOwner, setShowHotelReg } = useAppContext()
 
-    // Add scroll listener to change navbar style
     useEffect(() => {
-
-
         if (location.pathname !== '/') {
             setIsScrolled(true);
             return;
         } else {
             setIsScrolled(false)
         }
-        setIsScrolled(prev => location.pathname !== '/' ? true : prev);
-
+        
         const handleScroll = () => {
-            setIsScrolled(window.scrollY > 10);
+            setIsScrolled(window.scrollY > 50);
         };
         window.addEventListener("scroll", handleScroll);
-
-        // Cleanup listener
         return () => window.removeEventListener("scroll", handleScroll);
     }, [location.pathname]);
 
     return (
-        // Navbar wrapper with dynamic background on scroll
-        <nav className={`fixed top-0 left-0 w-full flex items-center justify-between px-4 md:px-16 lg:px-24 xl:px-32 transition-all duration-500 z-50 ${isScrolled ? "bg-white/80 shadow-md text-gray-700 backdrop-blur-lg py-3 md:py-4" : "py-4 md:py-6"}`}>
-
-            {/* Logo */}
-            <Link to='/' >
-                <img src={assets.logo} alt="logo" className={`h-9 ${isScrolled && "invert opacity-80"}`} />
+        <nav className={`fixed top-4 left-1/2 -translate-x-1/2 w-[95%] max-w-7xl flex items-center justify-between px-8 py-5 transition-all duration-700 z-50 rounded-[2rem] ${isScrolled ? "bg-white/90 backdrop-blur-2xl shadow-2xl shadow-primary/5 border border-gray-100" : "bg-transparent"}`}>
+            
+            {/* Elegant Logo */}
+            <Link to='/' className='flex items-center'>
+                <img src={assets.logo} alt="MenteStay" className={`h-8 w-auto transition-all ${isScrolled ? 'brightness-0' : 'invert'}`} />
             </Link>
 
-            {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center gap-4 lg:gap-8">
+            {/* Modern Navigation */}
+            <div className="hidden lg:flex items-center gap-12">
                 {navLinks.map((link, i) => (
-                    <a key={i} href={link.path} className={`group flex flex-col gap-0.5 ${isScrolled ? "text-gray-700" : "text-white"}`}>
+                    <Link 
+                        key={i} 
+                        to={link.path} 
+                        className={`text-[11px] font-black uppercase tracking-[0.2em] transition-all hover:text-accent ${isScrolled ? "text-primary/60" : "text-white/70 hover:text-white"}`}
+                    >
                         {link.name}
-                        {/* Hover underline animation */}
-                        <div className={`${isScrolled ? "bg-gray-700" : "bg-white"} h-0.5 w-0 group-hover:w-full transition-all duration-300`} />
-                    </a>
+                    </Link>
                 ))}
-                {/* Dashboard button */}
+            </div>
+
+            {/* Actions */}
+            <div className="flex items-center gap-6">
+                <div className='hidden md:flex items-center gap-4'>
+                    {user && (
+                        <button 
+                            className={`px-6 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${isScrolled ? 'bg-primary text-white hover:bg-accent' : 'bg-white/10 backdrop-blur-md text-white border border-white/20 hover:bg-white/20'}`} 
+                            onClick={() => isOwner ? navigate('/owner') : setShowHotelReg(true)}
+                        >
+                            {isOwner ? 'Manager' : 'List Property'}
+                        </button>
+                    )}
+                    
+                    {!user && (
+                        <button 
+                            onClick={openSignIn} 
+                            className={`px-6 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${isScrolled ? "bg-primary text-white" : "bg-white text-primary hover:bg-accent hover:text-white"}`}
+                        >
+                            Get Started
+                        </button>
+                    )}
+                </div>
+
                 {user && (
-                    <button className={`border px-4 py-1 text-sm font-light rounded-full cursor-pointer ${isScrolled ? 'text-black' : 'text-white'} transition-all`} onClick={() => isOwner ? navigate('/owner') : setShowHotelReg(true)}>
-                        {isOwner ? 'Dashboard' : 'List Your Hotel'}
-                    </button>
-                )
+                    <div className='flex items-center'>
+                        <UserButton afterSignOutUrl="/">
+                            <UserButton.MenuItems>
+                                <UserButton.Action label="My Bookings" labelIcon={<BookIcon />} onClick={() => navigate('/my-bookings')} />
+                            </UserButton.MenuItems>
+                        </UserButton>
+                    </div>
+                )}
 
-                }
-            </div>
-
-            {/* Desktop Right Side (Search + Login) */}
-            <div className="hidden md:flex items-center gap-4">
-                <img src={assets.searchIcon} alt="search" className={`${isScrolled && 'invert'} h-7 transition-all duration-500`} />
-
-                {user ?
-                    (<UserButton>
-                        <UserButton.MenuItems>
-                            <UserButton.Action label="My Boookng" labelIcon={<BookIcon />} onClick={() => navigate('/my-bookings')} />
-                        </UserButton.MenuItems>
-                    </UserButton>)
-                    :
-                    (<button onClick={openSignIn} className={`px-8 py-2.5 rounded-full ml-4 transition-all duration-500 ${isScrolled ? "text-white bg-black" : "bg-white text-black"}`}>
-                        Login
-                    </button>)
-                }
-
-                {/* Login button */}
-
-            </div>
-
-            {/* Mobile Menu Toggle Button */}
-
-            <div className="flex items-center gap-3 md:hidden">
-                {user && <UserButton>
-                    <UserButton.MenuItems>
-                        <UserButton.Action label="My Boookng" labelIcon={<BookIcon />} onClick={() => navigate('/my-bookings')} />
-                    </UserButton.MenuItems>
-                </UserButton>}
-                <img onClick={() => setIsMenuOpen(!isMenuOpen)} src={assets.menuIcon} alt="" className={`${isScrolled && "invert"} h-4`} />
-            </div>
-
-            {/* Mobile Menu Drawer */}
-            <div className={`fixed top-0 left-0 w-full h-screen bg-white text-base flex flex-col md:hidden items-center justify-center gap-6 font-medium text-gray-800 transition-all duration-500 ${isMenuOpen ? "translate-x-0" : "-translate-x-full"}`}>
-
-                {/* Close button */}
-                <button className="absolute top-4 right-4" onClick={() => setIsMenuOpen(false)}>
-                    <img src={assets.closeIcon} alt="close-menu" className="h-6" />
-                </button>
-
-                {/* Mobile nav links */}
-                {navLinks.map((link, i) => (
-                    <a key={i} href={link.path} onClick={() => setIsMenuOpen(false)}>
-                        {link.name}
-                    </a>
-                ))}
-
-                {/* Dashboard button (mobile) */}
-                {user && <button className="border px-4 py-1 text-sm font-light rounded-full cursor-pointer transition-all"
-                    onClick={() => isOwner ? navigate('/owner') : setShowHotelReg(true)}
+                {/* Mobile Menu */}
+                <button 
+                    onClick={() => setIsMenuOpen(true)}
+                    className={`lg:hidden p-2 rounded-xl transition-all ${isScrolled ? 'text-primary' : 'text-primary/60'}`}
                 >
-                    {isOwner ? 'Dashboard' : 'List Your Hotel'}
-                </button>}
+                    <div className='w-6 h-0.5 bg-current mb-1.5' />
+                    <div className='w-4 h-0.5 bg-current' />
+                </button>
+            </div>
 
-                {/* Login button (mobile) */}
-                {!user && <button onClick={openSignIn} className="bg-black text-white px-8 py-2.5 rounded-full transition-all duration-500">
-                    Login
-                </button>}
+            {/* Mobile Drawer */}
+            <div className={`fixed inset-0 bg-white z-[60] transition-all duration-700 flex flex-col p-12 ${isMenuOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-full"}`}>
+                <button onClick={() => setIsMenuOpen(false)} className="self-end text-primary text-4xl font-light">&times;</button>
+                
+                <div className='flex flex-col gap-8 mt-12'>
+                    {navLinks.map((link, i) => (
+                        <Link key={i} to={link.path} onClick={() => setIsMenuOpen(false)} className='text-4xl font-black text-primary tracking-tighter hover:text-accent'>
+                            {link.name}
+                        </Link>
+                    ))}
+                    <button className='mt-12 w-full py-5 rounded-3xl bg-primary text-white font-black uppercase tracking-widest' onClick={() => { setIsMenuOpen(false); user ? (isOwner ? navigate('/owner') : setShowHotelReg(true)) : openSignIn(); }}>
+                        {user ? (isOwner ? 'Dashboard' : 'Partner with Us') : 'Sign In'}
+                    </button>
+                </div>
             </div>
         </nav>
     );

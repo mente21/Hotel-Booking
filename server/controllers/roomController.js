@@ -75,3 +75,54 @@ export const toggleRoomAvailability = async (req, res) => {
         res.json({ success: false, message: error.message });
     }
 }
+
+// API to delete a room
+export const deleteRoom = async (req, res) => {
+    try {
+        const { roomId } = req.body;
+        const hotel = await Hotel.findOne({ owner: req.auth.userId });
+        const room = await Room.findById(roomId);
+
+        if (!room || room.hotel.toString() !== hotel._id.toString()) {
+            return res.json({ success: false, message: "Unauthorized or Room not found" });
+        }
+
+        await Room.findByIdAndDelete(roomId);
+        res.json({ success: true, message: "Room deleted successfully" });
+    } catch (error) {
+        res.json({ success: false, message: error.message });
+    }
+}
+
+// API to update room details
+export const updateRoom = async (req, res) => {
+    try {
+        const { roomId, roomType, pricePerNight, amenities } = req.body;
+        const hotel = await Hotel.findOne({ owner: req.auth.userId });
+        const room = await Room.findById(roomId);
+
+        if (!room || room.hotel.toString() !== hotel._id.toString()) {
+            return res.json({ success: false, message: "Unauthorized or Room not found" });
+        }
+
+        const updateData = {
+            roomType,
+            pricePerNight: +pricePerNight,
+            amenities: JSON.parse(amenities)
+        };
+
+        // If new images are uploaded
+        if (req.files && req.files.length > 0) {
+            const uploadImages = req.files.map(async (file) => {
+                const response = await cloudinary.uploader.upload(file.path);
+                return response.secure_url;
+            });
+            updateData.images = await Promise.all(uploadImages);
+        }
+
+        await Room.findByIdAndUpdate(roomId, updateData);
+        res.json({ success: true, message: "Room updated successfully" });
+    } catch (error) {
+        res.json({ success: false, message: error.message });
+    }
+}

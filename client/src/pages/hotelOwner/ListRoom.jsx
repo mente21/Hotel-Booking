@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react'
 import Title from '../../components/Title'
 import { useAppContext } from '../../context/AppContext';
 import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 const ListRoom = () => {
+    const navigate = useNavigate();
     const [rooms, setRooms] = useState([]);
     const { axios, getToken, user, currency } = useAppContext();
 
@@ -35,6 +37,23 @@ const ListRoom = () => {
         }
     }
 
+    // Delete Room
+    const deleteRoom = async (roomId) => {
+        if (!window.confirm("Are you sure you want to delete this room?")) return;
+        try {
+            const { data } = await axios.post('/api/rooms/delete', { roomId },
+                { headers: { Authorization: `Bearer ${await getToken()}` } });
+            if (data.success) {
+                toast.success(data.message)
+                fetchRooms()
+            } else {
+                toast.error(data.message)
+            }
+        } catch (error) {
+            toast.error(error.message)
+        }
+    }
+
     useEffect(() => {
         if (user) {
             fetchRooms()
@@ -43,62 +62,78 @@ const ListRoom = () => {
 
 
     return (
-        <div>
-            <Title
-                align='left'
-                font='outfit'
-                title='Room Listings'
-                subTitle='View, edit, or manage all listed rooms. keep the information up-to-date to provide the best experience for the users.'
-            />
+        <div className='animate-in fade-in duration-1000'>
+            <div className='mb-12'>
+                <h2 className='text-iris font-black uppercase tracking-[0.4em] text-[10px] mb-4'>Portfolio Management</h2>
+                <h1 className='text-5xl font-black text-midnight tracking-tighter leading-none'>
+                    Property Listings.
+                </h1>
+            </div>
 
-            <p className='text-gray-500 mt-8'>All Rooms</p>
+            <div className='mb-8 flex items-center justify-between'>
+                <p className='text-[10px] font-black uppercase tracking-widest text-slate-400'>Global Inventory: {rooms.length}</p>
+                <button onClick={() => navigate('/owner/add-room')} className='px-6 py-2 bg-iris text-white rounded-xl text-[10px] font-black uppercase tracking-widest hover:shadow-xl hover:shadow-iris/20 transition-all'>
+                    Add New Property
+                </button>
+            </div>
 
-            <div className='w-full max-w-3xl text-left border border-gray-300 rounded-lg max-h-80 overflow-y-scroll mt-3'>
+            <div className='w-full overflow-hidden rounded-[2.5rem] border border-slate-100 bg-white shadow-2xl shadow-midnight/5'>
                 <table className='w-full'>
-                    <thead className='bg-gray-50'>
-                        <tr>
-                            <th className='py-3 px-4 text-gray-800 font-medium'>Name</th>
-                            <th className='py-3 px-4 text-gray-800 font-medium max-sm:hidden'>Facility</th>
-                            <th className='py-3 px-4 text-gray-800 font-medium'>Price / night</th>
-                            <th className='py-3 px-4 text-gray-800 font-medium text-center'>Action</th>
+                    <thead>
+                        <tr className='bg-slate-50'>
+                            <th className='py-6 px-8 text-left text-[10px] font-black uppercase tracking-widest text-slate-400'>Property Type</th>
+                            <th className='py-6 px-8 text-left text-[10px] font-black uppercase tracking-widest text-slate-400 max-sm:hidden'>Amenities</th>
+                            <th className='py-6 px-8 text-left text-[10px] font-black uppercase tracking-widest text-slate-400'>Yield / Night</th>
+                            <th className='py-6 px-8 text-center text-[10px] font-black uppercase tracking-widest text-slate-400'>Availability</th>
+                            <th className='py-6 px-8 text-center text-[10px] font-black uppercase tracking-widest text-slate-400'>Actions</th>
                         </tr>
                     </thead>
 
-                    <tbody className='text-sm'>
+                    <tbody className='divide-y divide-slate-50'>
                         {rooms.map((items, index) => (
-                            <tr key={index}>
-                                <td className='py-3 px-4 text-gray-700 border-t border-gray-300'>
+                            <tr key={index} className='hover:bg-slate-50/50 transition-colors'>
+                                <td className='py-6 px-8 font-black text-midnight tracking-tight'>
                                     {items.roomType}
                                 </td>
 
-                                <td className='py-3 px-4 text-gray-700 border-t border-gray-300 max-sm:hidden'>
-                                    {items.amenities.join(', ')}
+                                <td className='py-6 px-8 text-slate-500 text-xs font-medium max-sm:hidden max-w-xs truncate'>
+                                    {items.amenities.join(' • ')}
                                 </td>
 
-                                <td className='py-3 px-4 text-gray-700 border-t border-gray-300'>
-                                    {currency}  {items.pricePerNight}
+                                <td className='py-6 px-8 font-black text-midnight'>
+                                    {currency}{items.pricePerNight}
                                 </td>
 
-                                <td className='py-3 px-4 border-t border-gray-300 text-sm text-red-500 text-center'>
-                                    <label className='relative inline-flex items-center cursor-pointer text-gray-900 gap-3'>
+                                <td className='py-6 px-8'>
+                                    <div className='flex justify-center'>
+                                        <label className='relative inline-flex items-center cursor-pointer'>
+                                            <input
+                                                type="checkbox"
+                                                className='sr-only peer'
+                                                checked={items.isAvailable}
+                                                onChange={() => toggleAvailability(items._id)}
+                                            />
+                                            <div className='w-11 h-6 bg-slate-200 rounded-full peer peer-checked:bg-iris transition-colors'></div>
+                                            <span className='absolute left-1 top-1 w-4 h-4 bg-white rounded-full transition-transform peer-checked:translate-x-5 shadow-sm'></span>
+                                        </label>
+                                    </div>
+                                </td>
 
-                                        <input
-                                            type="checkbox"
-                                            className='sr-only peer'
-                                            checked={items.isAvailable}
-                                            onChange={() => toggleAvailability(items._id)}
-                                        />
-
-                                        <div className='w-12 h-7 bg-slate-300 rounded-full peer peer-checked:bg-blue-600 transition-colors duration-200'></div>
-                                        <span className='dot absolute left-1 top-1 w-5 h-5 bg-white rounded-full transition-transform duration-200 ease-in-out peer-checked:translate-x-5'></span>
-                                    </label>
+                                <td className='py-6 px-8'>
+                                    <div className='flex items-center justify-center gap-6'>
+                                        <button onClick={() => navigate(`/owner/edit-room/${items._id}`)} className='text-[10px] font-black uppercase tracking-widest text-iris hover:underline'>
+                                            Edit
+                                        </button>
+                                        <button onClick={() => deleteRoom(items._id)} className='text-[10px] font-black uppercase tracking-widest text-rose-500 hover:underline'>
+                                            Delete
+                                        </button>
+                                    </div>
                                 </td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
             </div>
-
         </div>
     )
 }

@@ -120,7 +120,7 @@ const RoomDetail = () => {
             {/* room address */}
             <div className='flex items-center gap-1 text-gray-500 mt-2'>
                 <img src={assets.locationIcon} alt="location-icon" />
-                <span>{room?.hotel?.addressas}</span>
+                <span>{room?.hotel?.address}</span>
             </div>
 
             {/* room images */}
@@ -153,7 +153,7 @@ const RoomDetail = () => {
                     <div className='flex flex-wrap items-center mt-3 mb-6 gap-4'>
                         {room?.amenities?.map((item, index) => (
                             <div key={index} className='flex items-center gap-2 px-3 py-2 rounded-lg bg-gray-100'>
-                                <img src={facilityIcons[item]} alt={item} className='w-5 h-5' />
+                                <img src={facilityIcons[item] || assets.badgeIcon} alt={item} className='w-5 h-5' />
                                 <p className='text-xs'>{item}</p>
                             </div>
                         ))}

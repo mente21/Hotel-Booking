@@ -1,16 +1,68 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Playfair:ital,opsz,wght@0,5..1200,300..900;1,5..1200,300..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
 
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #2563EB;
-  --color-secondary: #FBBF24;
+  --color-midnight: #020617;
+  --color-indigo-deep: #1e1b4b;
+  --color-iris: #6366f1;
+  --color-rose: #f43f5e;
+  --color-slate-900: #0f172a;
+  --color-slate-800: #1e293b;
+  --color-slate-100: #f1f5f9;
+  --color-bone: #f8fafc;
+
+  --color-primary: var(--color-midnight);
+  --color-accent: var(--color-iris);
+  --color-surface: var(--color-white);
+  --color-muted: var(--color-slate-100);
+
+  --font-serif: "Playfair Display", serif;
+  --font-sans: "Plus Jakarta Sans", sans-serif;
 }
 
-* {
-  font-family: Outfit;
+@layer base {
+  * {
+    @apply transition-all duration-300;
+    font-family: var(--font-sans);
+  }
+
+  body {
+    @apply bg-white text-primary antialiased;
+  }
+}
+
+@layer components {
+  .clear-card {
+    @apply border border-gray-100 bg-white hover:border-accent/10 hover:shadow-2xl hover:shadow-primary/5 transition-all duration-500 rounded-3xl overflow-hidden p-4;
+  }
+
+  .glass-header {
+    @apply bg-white/80 backdrop-blur-3xl border-b border-gray-50;
+  }
+
+  .section-padding {
+    @apply py-32 px-6 md:px-16 lg:px-24 xl:px-40;
+  }
+
+  .modern-btn {
+    @apply px-8 py-4 rounded-2xl font-bold tracking-tight text-sm uppercase transition-all active:scale-95;
+  }
 }
 
 .font-playfair {
-  font-family: Playfair !important;
+  font-family: var(--font-serif) !important;
+}
+
+/* Scrollbar Refinement */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-200 rounded-full hover:bg-gray-300;
 }
